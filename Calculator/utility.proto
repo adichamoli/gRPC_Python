@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+message Number {
+    float value = 1;
+}
+
+message NumberDouble {
+    float value1 = 1;
+    float value2 = 2;
+}
+
+service Calculator {
+    rpc AddNum(NumberDouble) returns (Number) {}
+    rpc SubNum(NumberDouble) returns (Number) {}
+    rpc MulNum(NumberDouble) returns (Number) {}
+    rpc DivNum(NumberDouble) returns (Number) {}
+    rpc SquareRoot(Number) returns (Number) {}
+}
