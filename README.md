@@ -56,3 +56,63 @@ It is also applicable in last mile of distributed computing to connect devices, 
 * Duplex streaming is not possible.
 * Hard to get multiple resources in single request.
 * Need semantic versioning whenever the api contract needs to be changed.
+
+## Protocol Buffers
+Protocol Buffers (Protobuf) is a method of serializing structured data. It is useful in developing programs to communicate with each other over a wire or for storing data. The method involves an interface description language that describes the structure of some data and a program that generates source code from that description for generating or parsing a stream of bytes that represents the structured data.
+
+## Implementation Steps
+* Create Proto File<br/>
+       Proto file consists of consists of message and service
+       
+       message Number {
+               float value = 1;
+       }
+     
+       Here is the message having Single Variable
+       Where,       float -> Data type of variable
+                    value -> Name of variable
+                    1     -> Sequence of variable
+            
+       Here is the message for two variables.
+       message NumberDouble {
+               float value1 = 1;
+               float value2 = 2;
+       }
+
+       If you want to add condition to the variable. 
+       You can add mandatory or optional in the beginning of the variable.
+
+
+* Generate gRPC Classes<br/>
+       To Generate gRPC classes, you first need to grpc and grpc package to be installed in your system.
+       Use below command to install.
+     
+       $ pip install grpcio<br/>
+       $ pip install grpcio-tools
+     
+       Once installation is complete, you are good to create grpc class file.
+       $ python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. calculator.proto
+
+       The files generated will be as follows:
+       
+       calculator_pb2.py contains message classes
+       calculator_pb2.Number for request/response variables (x and y)
+       calculator_pb2_grpc.py contains server and client classes
+       calculator_pb2_grpc.CalculatorServicer for the server
+       calculator_pb2_grpc.CalculatorStub for the client
+       
+* Create the gRPC Server and Start it.<br/>
+     Use below command to start the server
+     
+      $ python server.py
+      Starting server. Listening on port 50051.
+      
+      Now we have a gRPC server, listening on port 50051.
+      
+* Create the gRPC client<br/>
+     With the server already listening, we simply run our client.
+     
+      $ python client.py
+      4.0
+      
+ Code can be taken from respective directories
